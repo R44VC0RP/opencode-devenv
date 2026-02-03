@@ -164,7 +164,7 @@ export const devenvSpawn = tool({
         ? `http://${domain}`
         : `http://${domain}:${gatewayInfo.entrypoint}`)
       : null;
-    const fallbackUrl = `http://${env.ip ?? "localhost"}:${activePort}`;
+    const directUrl = `http://${env.ip ?? "localhost"}:${activePort}`;
 
     const output = [
       "<devenv_spawned>",
@@ -174,8 +174,12 @@ export const devenvSpawn = tool({
       `Provider: ${env.provider}`,
       `Container: ${env.id}`,
       env.ip ? `IP: ${env.ip}` : null,
-      proxyUrl ? `URL: ${proxyUrl}` : `URL: ${fallbackUrl}`,
+      proxyUrl ? `URL: ${proxyUrl}` : null,
+      `Direct URL: ${directUrl}`,
+      `Port: ${activePort}`,
       `Workdir: ${workdir}`,
+      ``,
+      `To verify the server is running, use: curl -s -o /dev/null -w "%{http_code}" ${proxyUrl ?? directUrl}`,
       `Note: Dev server must bind to 0.0.0.0 (not localhost) for external access`,
       "</devenv_spawned>",
     ].filter(Boolean).join("\n");

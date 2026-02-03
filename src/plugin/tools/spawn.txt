@@ -5,6 +5,12 @@ Commands run inside the Docker container with the project directory mounted.
 Use `shell` to keep the session alive after command exits. When proxy is enabled,
 this registers `<project>.localhost` and routes it to the detected port (default 3000).
 
+Output includes:
+- URL: The proxy URL (e.g., http://inbound.localhost) - use this in browser
+- Direct URL: Container IP + port (e.g., http://192.168.x.x:3000) - for curl/verification
+- Port: The detected or configured port number
+- A curl command to verify the server is responding
+
 Examples:
 - Start dev server: command="npm", args=["run", "dev"], title="Dev Server"
 - Open shell: command="bash", title="Shell"
