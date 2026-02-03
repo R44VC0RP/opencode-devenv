@@ -50,7 +50,7 @@ export const loadConfig = async (worktree: string): Promise<DevEnvConfig> => {
     distro,
     machineName: project?.machineName,
     user: project?.user,
-    domain: project?.domain ?? global.domain ?? DEFAULT_DOMAIN,
+    domain: project?.domain, // Only set if explicitly configured; spawn.ts falls back to projectName
     internalPort: project?.internalPort,
   };
 };
