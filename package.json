@@ -1,0 +1,46 @@
+{
+  "name": "opencode-devenv",
+  "module": "index.ts",
+  "version": "0.1.0",
+  "description": "OpenCode plugin for project-scoped dev environments with OrbStack and Docker support",
+  "author": "OpenCode",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "devenv",
+    "orbstack",
+    "docker",
+    "linux",
+    "dev-environment",
+    "pty"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/opencode-ai/opencode-devenv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/opencode-ai/opencode-devenv/issues"
+  },
+  "homepage": "https://github.com/opencode-ai/opencode-devenv#readme",
+  "files": [
+    "index.ts",
+    "src"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "^1.0.146",
+    "@opencode-ai/sdk": "^1.0.146",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "bun-pty": "^0.4.2"
+  }
+}

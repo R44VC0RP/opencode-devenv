@@ -1,0 +1,3 @@
+Read output from a DevEnv PTY session buffer.
+
+Supports pagination and optional regex filtering. Use offset/limit to paginate.

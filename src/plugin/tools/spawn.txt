@@ -1,0 +1,11 @@
+Spawn a PTY session inside the project dev environment.
+
+This will automatically provision a Docker container if it does not exist yet.
+Commands run inside the Docker container with the project directory mounted.
+Use `shell` to keep the session alive after command exits. When proxy is enabled,
+this registers `<project>.localhost` and routes it to the detected port (default 3000).
+
+Examples:
+- Start dev server: command="npm", args=["run", "dev"], title="Dev Server"
+- Open shell: command="bash", title="Shell"
+- Run with specific port: command="bun", args=["run", "dev", "--", "--port", "8000"]

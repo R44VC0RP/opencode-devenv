@@ -1,0 +1,10 @@
+Manage dev environments, PTY sessions, the web dashboard, and proxy services.
+
+Scopes:
+- env: status, list, destroy
+- pty: list
+- web: start, stop, status
+- proxy: start, stop, status
+- routes: rebuild
+
+Defaults: env/status, pty/list, web/status, proxy/status.

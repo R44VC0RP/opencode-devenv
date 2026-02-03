@@ -1,0 +1,5 @@
+Send input to a DevEnv PTY session, or terminate it.
+
+Use `data` to send input (supports escape sequences like \n and \x03). Use
+`kill=true` to terminate the session. Set `cleanup=true` to remove it from the
+session list after killing.
