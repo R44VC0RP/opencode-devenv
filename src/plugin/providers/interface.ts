@@ -10,6 +10,8 @@ export type ProviderCreateInput = {
   name: string;
   distro: string;
   user?: string;
+  worktree?: string;
+  tmpfsPaths?: string[];
 };
 
 export type ProxyTarget = {

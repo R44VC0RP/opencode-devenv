@@ -17,6 +17,10 @@ const asString = (value: unknown): string | undefined => {
   return undefined;
 };
 
+const shellEscape = (value: string): string => {
+  return `'${value.replace(/'/g, `'\''`)}'`;
+};
+
 const normalizeStatus = (state: Record<string, unknown>): DevEnvStatus => {
   const running = state.Running;
   const paused = state.Paused;
@@ -123,10 +127,16 @@ export class DockerProvider implements DevEnvProvider {
     const homeDir = process.env.HOME || "/root";
     const userDir = homeDir.startsWith("/Users") ? "/Users" : "/home";
 
+    const tmpfsArgs = (input.tmpfsPaths ?? [])
+      .filter((path) => path && path.trim())
+      .map((path) => `--tmpfs ${shellEscape(path)}`)
+      .join(" ");
+
     const createResult = await this.#shell`docker run -d \
       --name ${input.name} \
       --hostname ${input.name} \
       -v ${userDir}:${userDir} \
+      ${tmpfsArgs} \
       ${input.distro} \
       sleep infinity`.quiet().nothrow();
 

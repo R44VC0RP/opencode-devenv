@@ -161,6 +161,7 @@ Global config: `~/.config/opencode/devenv.json`
 - Traefik routes `<project>.localhost` to the container's internal port
 - Dev servers should bind to `0.0.0.0` inside the dev environment
 - Each project gets its own container, so ports only conflict within that project
+- For Next.js projects, `.next` is mounted as tmpfs inside the container to prevent stale dev locks on the host
 
 ## Docker Image
 

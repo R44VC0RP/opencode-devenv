@@ -1,4 +1,4 @@
-import { basename } from "node:path";
+import { basename, join } from "node:path";
 import { createHash } from "node:crypto";
 import { createLogger } from "./logger.ts";
 import { loadConfig } from "./config.ts";
@@ -10,6 +10,12 @@ import type { PluginContext, PluginShell } from "./types.ts";
 
 const log = createLogger("manager");
 const BOOTSTRAP_VERSION = 4;
+const NEXT_CONFIG_FILES = [
+  "next.config.js",
+  "next.config.mjs",
+  "next.config.cjs",
+  "next.config.ts",
+];
 
 export type ManagerInput = {
   project: PluginContext["project"];
@@ -47,6 +53,21 @@ const buildMachineName = (projectName: string, projectId: string): string => {
 
   const suffix = projectId.replace(/^path-/, "").slice(0, 8);
   return `opencode-${suffix}`;
+};
+
+const resolveTmpfsPaths = async (worktree: string): Promise<string[]> => {
+  if (!worktree) {
+    return [];
+  }
+
+  for (const name of NEXT_CONFIG_FILES) {
+    const file = Bun.file(join(worktree, name));
+    if (await file.exists()) {
+      return [join(worktree, ".next")];
+    }
+  }
+
+  return [];
 };
 
 const mergeConfig = (base: DevEnvConfig, override?: DevEnvConfig): DevEnvConfig => {
@@ -177,10 +198,13 @@ export class DevEnvManager {
       provider: provider.kind,
     });
 
+    const tmpfsPaths = await resolveTmpfsPaths(context.worktree);
     const info = await provider.create({
       name,
       distro: config.distro ?? "ubuntu:22.04",
       user: config.user,
+      worktree: context.worktree,
+      tmpfsPaths,
     });
 
     const record: DevEnvRecord = {
